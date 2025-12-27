@@ -35,7 +35,7 @@
 <li><code>competition_ids</code>: The league you are playing in (default: 1 = Bundesliga).</li>
 <li><code>league_name</code>: The exact name of your league (case-sensitive, include spaces, use UTF encoding for special symbols like emojis). If the name doesn't match any league in your account, the tool will default to your first league. If you belong to only one league, you can leave this empty.</li>
        <li><code>start_budget</code>: Your league's starting budget (default: 50,000,000), used to calculate managers' budgets.</li>
-        <li><code>league_start_date</code>: Your league's starting date (default: 2025-08-08), used to calculate managers' budgets.</li>
+        <li><code>league_start_date</code>: Your league's start datetime in ISO 8601 format (e.g., <code>2025-08-08T10:00:00Z</code>). The time is in UTC. Used to filter activities for budget calculation.</li>
       </ul>
     </li>
     <li>
