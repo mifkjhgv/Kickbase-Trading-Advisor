@@ -176,9 +176,24 @@ def save_player_data_to_db(token, competition_ids, last_mv_values, last_pfm_valu
 
 def load_player_data_from_db():
     """Load player data from SQLite database into a dataframe"""
-    
+
     conn = sqlite3.connect("player_data_total.db")
     df = pd.read_sql("SELECT * FROM player_data_1d", conn)
+
+    # Print last data entry info
+    if not df.empty and "date" in df.columns:
+        df["date"] = pd.to_datetime(df["date"])
+        today = pd.Timestamp.now().normalize()
+
+        past_df = df[df["date"] <= today].sort_values("date", ascending=False)
+        future_count = len(df[df["date"] > today])
+
+        if not past_df.empty:
+            last_date = past_df["date"].max()
+            print(f"\nLast database entry: {last_date.strftime('%Y-%m-%d')} ({len(past_df)} rows, future entries: {future_count})")
+            print("\nLast 5 database entries:")
+            print(past_df[["last_name", "team_name", "date", "mv", "p"]].head(5).to_string(index=False))
+
     conn.close()
 
     return df

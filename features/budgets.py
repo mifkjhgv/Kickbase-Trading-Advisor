@@ -21,8 +21,8 @@ def calc_manager_budgets(token, league_id, league_start_date, start_budget):
 
     activities_df = pd.DataFrame(activities)
 
-    # Bonuses
-    total_login_bonus = sum(entry.get("data", {}).get("bn", 0) for entry in login_bonus)
+    # Fixed login bonus per user (assuming daily login)
+    login_bonus_per_user = 100_000
 
     total_achievement_bonus = 0
     for item in achievement_bonus:
@@ -93,8 +93,8 @@ def calc_manager_budgets(token, league_id, league_start_date, start_budget):
     budget_df["Budget"] = budget_df["Budget"] + budget_df["point_bonus"].fillna(0)
     budget_df.drop(columns=["point_bonus"], inplace=True, errors="ignore")
 
-    # add total login bonus equally to everyone (100% estimation, if the user logged in every day)
-    budget_df["Budget"] += total_login_bonus
+    # add fixed login bonus per user (assuming daily login)
+    budget_df["Budget"] += login_bonus_per_user
 
     # Ensure consistent float format
     budget_df["Budget"] = budget_df["Budget"].astype(float)
