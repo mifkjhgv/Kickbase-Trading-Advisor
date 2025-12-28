@@ -24,8 +24,8 @@ def calc_manager_budgets(token, league_id, league_start_date, start_budget):
 
     # Daily login bonus per user (assuming daily login)
     daily_login_bonus = 100_000
-    start_date = datetime.fromisoformat(league_start_date.replace("Z", "+00:00"))
-    days_since_start = (datetime.now(start_date.tzinfo) - start_date).days + 1
+    start_date = datetime.fromisoformat(league_start_date.replace("Z", "+00:00")).date()
+    days_since_start = (datetime.now().date() - start_date).days + 1
     total_login_bonus_per_user = daily_login_bonus * days_since_start
 
     total_achievement_bonus = 0
