@@ -9,6 +9,7 @@ from kickbase_api.manager import (
     get_manager_info,
 )
 from kickbase_api.others import get_achievement_reward
+from datetime import datetime
 import pandas as pd
 
 def calc_manager_budgets(token, league_id, league_start_date, start_budget):
@@ -21,8 +22,11 @@ def calc_manager_budgets(token, league_id, league_start_date, start_budget):
 
     activities_df = pd.DataFrame(activities)
 
-    # Fixed login bonus per user (assuming daily login)
-    login_bonus_per_user = 100_000
+    # Daily login bonus per user (assuming daily login)
+    daily_login_bonus = 100_000
+    start_date = datetime.fromisoformat(league_start_date.replace("Z", "+00:00"))
+    days_since_start = (datetime.now(start_date.tzinfo) - start_date).days + 1
+    total_login_bonus_per_user = daily_login_bonus * days_since_start
 
     total_achievement_bonus = 0
     for item in achievement_bonus:
@@ -93,8 +97,8 @@ def calc_manager_budgets(token, league_id, league_start_date, start_budget):
     budget_df["Budget"] = budget_df["Budget"] + budget_df["point_bonus"].fillna(0)
     budget_df.drop(columns=["point_bonus"], inplace=True, errors="ignore")
 
-    # add fixed login bonus per user (assuming daily login)
-    budget_df["Budget"] += login_bonus_per_user
+    # add daily login bonus per user (assuming daily login)
+    budget_df["Budget"] += total_login_bonus_per_user
 
     # Ensure consistent float format
     budget_df["Budget"] = budget_df["Budget"].astype(float)
