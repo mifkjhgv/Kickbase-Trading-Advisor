@@ -118,7 +118,7 @@ def build_user_transactions(token, league_id, activities, user_id_map, start_bud
         for day in range(days_since_start):
             bonus_date = start_date + timedelta(days=day)
             users[username].append({
-                "date": bonus_date.strftime("%Y-%m-%dT23:00:00Z"),
+                "date": bonus_date.strftime("%Y-%m-%dT00:00:00Z"),
                 "type": "login_bonus",
                 "description": f"Daily login bonus (day {day + 1})",
                 "amount": daily_login_bonus
