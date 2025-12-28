@@ -3,3 +3,4 @@ __pycache__
 .venv
 venv/
 player_data_total.db
+CLAUDE.md

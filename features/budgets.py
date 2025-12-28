@@ -56,7 +56,8 @@ def calc_manager_budgets(token, league_id, league_start_date, start_budget):
 
     perf_df = pd.DataFrame(performances)
     if not perf_df.empty:
-        perf_df["point_bonus"] = perf_df["tp"].fillna(0) * 1000
+        # perf_df["point_bonus"] = perf_df["tp"].fillna(0) * 1000
+        perf_df["point_bonus"] = 0
     else:
         perf_df["name"] = []
         perf_df["point_bonus"] = []
