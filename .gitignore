@@ -5,3 +5,4 @@ venv/
 player_data_total.db
 transaction_exports/
 CLAUDE.md
+.DS_Store
