@@ -11,7 +11,6 @@ from features.predictions.data_handler import (
     load_player_data_from_db,
 )
 from features.budgets import calc_manager_budgets
-from IPython.display import display
 from dotenv import load_dotenv
 import os, pandas as pd
 
@@ -74,7 +73,7 @@ league_id = get_league_id(token, league_name)
 # Calculate (estimated) budgets of all managers in the league
 manager_budgets_df = calc_manager_budgets(token, league_id, league_start_date, start_budget)
 print("\n=== Manager Budgets ===")
-display(manager_budgets_df)
+print(manager_budgets_df)
 
 # Data handling
 create_player_data_table()
@@ -99,12 +98,12 @@ live_predictions_df = live_data_predictions(today_df, model, features)
 # Join with current available players on the market
 market_recommendations_df = join_current_market(token, league_id, live_predictions_df)
 print("\n=== Market Recommendations ===")
-display(market_recommendations_df)
+print(market_recommendations_df)
 
 # Join with current players on the team
 squad_recommendations_df = join_current_squad(token, league_id, live_predictions_df)
 print("\n=== Squad Recommendations ===")
-display(squad_recommendations_df)
+print(squad_recommendations_df)
 
 # Send email with recommendations
 send_mail(manager_budgets_df, market_recommendations_df, squad_recommendations_df, email)
